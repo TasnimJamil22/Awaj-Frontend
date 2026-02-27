@@ -17,7 +17,7 @@ type EvidenceFile = {
   lastModified: number;
 };
 
-type ComplaintRecord = {
+type ComplaintRecord = { 
   caseId: string;
   pin: string;
   createdAt: string;

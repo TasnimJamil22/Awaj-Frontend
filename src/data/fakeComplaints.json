@@ -1,0 +1,47 @@
+[
+  {
+    "_id": "1",
+    "title": "Bribery at Land Office",
+    "description": "Officer demanding extra money for land document approval.",
+    "category": "Corruption",
+    "district": "Dhaka",
+    "upazila": "Mirpur",
+    "status": "Pending"
+  },
+  {
+    "_id": "2",
+    "title": "Illegal Fee Collection in School",
+    "description": "School authority collecting unofficial fees from students.",
+    "category": "Fraud",
+    "district": "Chattogram",
+    "upazila": "Pahartali",
+    "status": "In Progress"
+  },
+  {
+    "_id": "3",
+    "title": "Government Aid Misuse",
+    "description": "Relief goods not distributed properly in rural area.",
+    "category": "Corruption",
+    "district": "Khulna",
+    "upazila": "Dumuria",
+    "status": "Resolved"
+  },
+  {
+    "_id": "4",
+    "title": "Fake Job Circular Scam",
+    "description": "Fraudulent job circular asking for advance payment.",
+    "category": "Fraud",
+    "district": "Rajshahi",
+    "upazila": "Boalia",
+    "status": "Pending"
+  },
+  {
+    "_id": "5",
+    "title": "Hospital Service Negligence",
+    "description": "Public hospital staff demanding bribe for treatment.",
+    "category": "Corruption",
+    "district": "Sylhet",
+    "upazila": "Beanibazar",
+    "status": "Pending"
+  }
+]
