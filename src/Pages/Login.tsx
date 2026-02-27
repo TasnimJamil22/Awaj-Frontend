@@ -8,16 +8,17 @@ const Login = () => {
   const navigate = useNavigate();
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleSubmit = async (e:any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     try {
       const res = await API.post("/auth/login", { email, password });
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("role", res.data.role);
+      localStorage.setItem("email", res.data.email);
       navigate("/");
       console.log("ROLE AFTER LOGIN:", res.data.role); // dashboard
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (err:any) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (err: any) {
       alert(err.response?.data?.message || "Invalid credentials");
     }
   };
@@ -48,7 +49,12 @@ const Login = () => {
         >
           Login
         </button>
-         <p>New to Awaj? <Link to='/register' className="text-green-600">Register</Link></p>
+        <p>
+          New to Awaj?{" "}
+          <Link to="/register" className="text-green-600">
+            Register
+          </Link>
+        </p>
       </form>
     </div>
   );
@@ -140,7 +146,7 @@ export default Login;
 //   };
 //      return (
 //         <div className="hero bg-base-200 min-h-screen">
-             
+
 //                 <form onSubmit={handleLogin} className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
 //                     <div className="card-body">
 //                         <fieldset className="fieldset">
@@ -150,7 +156,7 @@ export default Login;
 //                                setEmail(e.target.value)
 //         } />
 //                             <label className="label">Password</label>
-//                             <input type="password" className="input" placeholder="Password" 
+//                             <input type="password" className="input" placeholder="Password"
 //                             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
 //                                setPassword(e.target.value)
 //         }/>
@@ -159,10 +165,9 @@ export default Login;
 //                         </fieldset>
 //                           <p>New to Awaj? <Link to='/signup' className="text-blue-600">Sign up</Link></p>
 //                     </div>
-                  
+
 //                 </form>
-                
-           
+
 //         </div>
 //     );
 // };
@@ -170,15 +175,11 @@ export default Login;
 // export default Login;
 
 // // import { Link } from "react-router-dom";
- 
-
-
-
 
 // // const Login = () => {
 // //     return (
 // //         <div className="hero bg-base-200 min-h-screen">
-             
+
 // //                 <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
 // //                     <div className="card-body">
 // //                         <fieldset className="fieldset">
@@ -191,10 +192,9 @@ export default Login;
 // //                         </fieldset>
 // //                           <p>New to Awaj? <Link to='/signup'>Sign up</Link></p>
 // //                     </div>
-                  
+
 // //                 </div>
-                
-           
+
 // //         </div>
 // //     );
 

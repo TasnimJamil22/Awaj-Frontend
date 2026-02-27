@@ -3,7 +3,6 @@
 // // import ComplaintList from "../tables/ComplaintList";
 // // import { complaints } from "../../data/sampleData";
 
-
 // // const AuthorityDashboard = () => {
 // //   const handleUpdate = (id:number) => alert("Update complaint " + id);
 
@@ -16,7 +15,6 @@
 // // };
 
 // // export default AuthorityDashboard;
-
 
 // //
 // //
@@ -38,7 +36,6 @@
 //   const [complaints, setComplaints] = useState<Complaint[]>([]);
 //   const [selectedDistrict, setSelectedDistrict] = useState("");
 
-
 //   console.log(setComplaints);
 //   useEffect(() => {
 //     axios.get("/src/data/fakeComplaints.json")
@@ -48,28 +45,27 @@
 //       .catch((err) => console.error(err));
 //   }, []); // empty dependency array = run once
 
-  // const handleDistrictChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-  //   setSelectedDistrict(e.target.value);
-  // };
+// const handleDistrictChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+//   setSelectedDistrict(e.target.value);
+// };
 
-  // // Filter complaints by district
-  // const filteredComplaints = selectedDistrict
-  //   ? complaints.filter(c => c.district === selectedDistrict)
-  //   : complaints;
+// // Filter complaints by district
+// const filteredComplaints = selectedDistrict
+//   ? complaints.filter(c => c.district === selectedDistrict)
+//   : complaints;
 
-
-    //   const districts = [
-    // "Dhaka","Gazipur","Tangail","Manikganj","Munshiganj","Narayanganj","Narsingdi",
-    // "Faridpur","Madaripur","Shariatpur","Rajbari",
-    // "Chattogram","Cox’s Bazar","Bandarban","Rangamati","Khagrachhari","Feni",
-    // "Noakhali","Lakshmipur","Brahmanbaria","Chandpur","Comilla",
-    // "Khulna","Jessore","Satkhira","Bagerhat","Narail","Chuadanga","Magura","Jhenaidah",
-    // "Barishal","Patuakhali","Bhola","Jhalokathi","Pirojpur","Barguna",
-    // "Sylhet","Moulvibazar","Habiganj","Sunamganj",
-    // "Rajshahi","Bogura","Joypurhat","Naogaon","Natore","Pabna","Sirajganj",
-    // "Rangpur","Dinajpur","Thakurgaon","Panchagarh","Nilphamari","Kurigram","Lalmonirhat","Gaibandha",
-    // "Mymensingh","Jamalpur","Netrokona","Sherpur"
-  // ];
+//   const districts = [
+// "Dhaka","Gazipur","Tangail","Manikganj","Munshiganj","Narayanganj","Narsingdi",
+// "Faridpur","Madaripur","Shariatpur","Rajbari",
+// "Chattogram","Cox’s Bazar","Bandarban","Rangamati","Khagrachhari","Feni",
+// "Noakhali","Lakshmipur","Brahmanbaria","Chandpur","Comilla",
+// "Khulna","Jessore","Satkhira","Bagerhat","Narail","Chuadanga","Magura","Jhenaidah",
+// "Barishal","Patuakhali","Bhola","Jhalokathi","Pirojpur","Barguna",
+// "Sylhet","Moulvibazar","Habiganj","Sunamganj",
+// "Rajshahi","Bogura","Joypurhat","Naogaon","Natore","Pabna","Sirajganj",
+// "Rangpur","Dinajpur","Thakurgaon","Panchagarh","Nilphamari","Kurigram","Lalmonirhat","Gaibandha",
+// "Mymensingh","Jamalpur","Netrokona","Sherpur"
+// ];
 //   return (
 //     <div>
 //       <h1 className="text-orange-700 text-3xl p-3">Complaints</h1>
@@ -97,16 +93,16 @@
 //         }
 //       </div>
 
-
 //     </div>
 //   );
 // };
 
 // export default Dashboard;
- import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import ComplaintCard from "./AuthorityPanel";
 import API from "@/services/api";
 import type { Complaint } from "@/types/complaint";
+ 
 
 const ComplaintsPage = () => {
   const [complaints, setComplaints] = useState<Complaint[]>([]);
@@ -118,19 +114,19 @@ const ComplaintsPage = () => {
   const email = localStorage.getItem("email");
 
   useEffect(() => {
-  const fetchComplaints = async () => {
-    try {
-      const res = await API.get("/complaints");
-      setComplaints(res.data);
-    } catch (err: any) {
-      setError("Error fetching complaints");
-    } finally {
-      setLoading(false);
-    }
-  };
+    const fetchComplaints = async () => {
+      try {
+        const res = await API.get("/complaints");
+        setComplaints(res.data);
+      } catch (err: any) {
+        setError("Error fetching complaints");
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  fetchComplaints();
-}, []);
+    fetchComplaints();
+  }, []);
 
   // useEffect(() => {
   //   const fetchComplaints = async () => {
@@ -168,17 +164,67 @@ const ComplaintsPage = () => {
     : complaints;
 
   const districts = [
-    "Dhaka","Gazipur","Tangail","Manikganj","Munshiganj","Narayanganj","Narsingdi",
-    "Faridpur","Madaripur","Shariatpur","Rajbari",
-    "Chattogram","Cox’s Bazar","Bandarban","Rangamati","Khagrachhari","Feni",
-    "Noakhali","Lakshmipur","Brahmanbaria","Chandpur","Comilla",
-    "Khulna","Jessore","Satkhira","Bagerhat","Narail","Chuadanga","Magura","Jhenaidah",
-    "Barishal","Patuakhali","Bhola","Jhalokathi","Pirojpur","Barguna",
-    "Sylhet","Moulvibazar","Habiganj","Sunamganj",
-    "Rajshahi","Bogura","Joypurhat","Naogaon","Natore","Pabna","Sirajganj",
-    "Rangpur","Dinajpur","Thakurgaon","Panchagarh","Nilphamari","Kurigram","Lalmonirhat","Gaibandha",
-    "Mymensingh","Jamalpur","Netrokona","Sherpur"
+    "Dhaka",
+    "Gazipur",
+    "Tangail",
+    "Manikganj",
+    "Munshiganj",
+    "Narayanganj",
+    "Narsingdi",
+    "Faridpur",
+    "Madaripur",
+    "Shariatpur",
+    "Rajbari",
+    "Chattogram",
+    "Cox’s Bazar",
+    "Bandarban",
+    "Rangamati",
+    "Khagrachhari",
+    "Feni",
+    "Noakhali",
+    "Lakshmipur",
+    "Brahmanbaria",
+    "Chandpur",
+    "Comilla",
+    "Khulna",
+    "Jessore",
+    "Satkhira",
+    "Bagerhat",
+    "Narail",
+    "Chuadanga",
+    "Magura",
+    "Jhenaidah",
+    "Barishal",
+    "Patuakhali",
+    "Bhola",
+    "Jhalokathi",
+    "Pirojpur",
+    "Barguna",
+    "Sylhet",
+    "Moulvibazar",
+    "Habiganj",
+    "Sunamganj",
+    "Rajshahi",
+    "Bogura",
+    "Joypurhat",
+    "Naogaon",
+    "Natore",
+    "Pabna",
+    "Sirajganj",
+    "Rangpur",
+    "Dinajpur",
+    "Thakurgaon",
+    "Panchagarh",
+    "Nilphamari",
+    "Kurigram",
+    "Lalmonirhat",
+    "Gaibandha",
+    "Mymensingh",
+    "Jamalpur",
+    "Netrokona",
+    "Sherpur",
   ];
+  
 
   return (
     <div className="p-6">
@@ -191,7 +237,9 @@ const ComplaintsPage = () => {
       >
         <option value="">All Districts</option>
         {districts.map((d) => (
-          <option key={d} value={d}>{d}</option>
+          <option key={d} value={d}>
+            {d}
+          </option>
         ))}
       </select>
 

@@ -12,7 +12,7 @@ const RegisterPage = () => {
   const navigate = useNavigate();
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleSubmit = async (e:any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     try {
       const res = await API.post("/auth/register", {
@@ -25,9 +25,10 @@ const RegisterPage = () => {
       });
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("role", res.data.role);
+      localStorage.setItem("email", res.data.email);
       navigate("/"); // dashboard
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (err:any) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (err: any) {
       alert(err.response?.data?.message || "Error registering user");
     }
   };
@@ -51,9 +52,8 @@ const RegisterPage = () => {
           onChange={(e) => setEmail(e.target.value)}
           className="w-full border border-gray-300 p-3 rounded-lg"
           required
-          
         />
-         
+
         <input
           type="password"
           placeholder="Password"
@@ -89,7 +89,12 @@ const RegisterPage = () => {
         >
           Register
         </button>
-          <p>Already have an account?<Link to='/login' className="text-green-600">Login</Link></p>
+        <p>
+          Already have an account?
+          <Link to="/login" className="text-green-600">
+            Login
+          </Link>
+        </p>
       </form>
     </div>
   );
