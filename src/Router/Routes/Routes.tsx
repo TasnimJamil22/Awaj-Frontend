@@ -13,6 +13,10 @@ import ProtectedRoute from "./ProtectedRoutes";
 
  import CreateAuthority from './../../Pages/CreateAuthority';
 import MyComplaints from "@/Pages/MyComplaints";
+import AssignDistrict from "@/Pages/AssignDistrict";
+import CategoryManagement from "@/Pages/SuperAdmin/CategoryManagement";
+import AnalyticsPage from "@/Pages/SuperAdmin/Analytics";
+import ManageUsers from "@/Pages/SuperAdmin/ManageUsers";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -86,13 +90,46 @@ const router = createBrowserRouter([
         )
       },
       {
-  path: "/my-complaints",
+        path: "/my-complaints",
+        element: (
+          <ProtectedRoute roles={["user"]}>
+             <MyComplaints />
+          </ProtectedRoute>
+        )
+        },
+        {
+  path: "/assign-district",
   element: (
-    <ProtectedRoute roles={["user"]}>
-      <MyComplaints />
+    <ProtectedRoute roles={["superadmin"]}>
+      <AssignDistrict />
     </ProtectedRoute>
   )
-}
+},
+{
+  path: "/superadmin/categories",
+  element: (
+    <ProtectedRoute roles={["superadmin"]}>
+      <CategoryManagement />
+    </ProtectedRoute>
+  )
+},
+ {
+  path: "/superadmin/users",
+  element: (
+    <ProtectedRoute roles={["superadmin"]}>
+      <ManageUsers />
+    </ProtectedRoute>
+  ),
+},
+ {
+  path: "/analytics",
+  element: (
+    <ProtectedRoute roles={["superadmin"]}>
+      <AnalyticsPage />
+    </ProtectedRoute>
+  ),
+},
+
     ]
   }
 ]);

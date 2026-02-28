@@ -4,6 +4,7 @@ import ComplaintCard from "@/components/dashboards/AuthorityPanel";
 import { getMyComplaints } from "@/api/complaintsApi";
 
 const MyComplaints = () => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [complaints, setComplaints] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 

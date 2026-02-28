@@ -38,13 +38,39 @@ const Header = () => {
             // tabIndex="-1"
             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
           >
-            <li>
-              <Link to="/">Home</Link>
-            </li>
+             <li>
+            <Link to="/">Home</Link>
+          </li>
 
+          {role === "authority" && (
             <li>
               <Link to="/authority">Complaints</Link>
             </li>
+          )}
+          {role === "user" && (
+            <li>
+              <Link to="/my-complaints">My Complaints</Link>
+            </li>
+          )}
+          {role === "superadmin" && (
+           <>
+            <li>
+              <Link to="/create-authority">Create Authority</Link>
+            </li>
+            <li>
+              <Link to="/assign-district">Assign District</Link>
+            </li>
+            <li>
+              <Link to="/superadmin/categories">Manage Category</Link>
+            </li>
+            <li>
+              <Link to="/superadmin/users">Manage Users</Link>
+            </li>
+            <li>
+              <Link to="/analytics">View Analytics</Link>
+            </li>
+           </>
+          )}
           </ul>
         </div>
         <Link to="/" className="btn btn-ghost text-xl text-orange-600">
@@ -72,9 +98,23 @@ const Header = () => {
             </li>
           )}
           {role === "superadmin" && (
+           <>
             <li>
               <Link to="/create-authority">Create Authority</Link>
             </li>
+            <li>
+              <Link to="/assign-district">Assign District</Link>
+            </li>
+            <li>
+              <Link to="/superadmin/categories">Manage Category</Link>
+            </li>
+            <li>
+              <Link to="/superadmin/users">Manage Users</Link>
+            </li>
+            <li>
+              <Link to="/analytics">View Analytics</Link>
+            </li>
+           </>
           )}
         </ul>
       </div>

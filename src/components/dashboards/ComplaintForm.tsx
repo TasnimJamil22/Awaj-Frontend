@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { createComplaint } from "@/api/complaintsApi";
 import { useState } from "react";
-import API from "@/services/api";
+// import API from "@/services/api";
 
 const ComplaintForm = () => {
   const [title, setTitle] = useState("");
@@ -8,30 +10,54 @@ const ComplaintForm = () => {
   const [district, setDistrict] = useState("");
   const [upazila, setUpazila] = useState("");
   const [anonymous, setAnonymous] = useState(false);
+  const [evidence, setEvidence] = useState<File | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("description", description);
+    formData.append("category", category);
+    formData.append("district", district);
+    formData.append("upazila", upazila);
+    // formData.append("anonymous", String(anonymous));
+    formData.append("anonymous", anonymous.toString());
+
+    if (evidence) {
+      formData.append("evidence", evidence);
+    }
+
     try {
-      const res = await API.post("/complaints", {
-        title,
-        description,
-        category,
-        district,
-        upazila,
-        anonymous,
-      });
-      alert("Complaint submitted!");
-      // clear form
-      setTitle("");
-      setDescription("");
-      setCategory("");
-      setDistrict("");
-      setUpazila("");
-      setAnonymous(false);
+      await createComplaint(formData); // 👈 clean API call
+      alert("Complaint submitted successfully!");
     } catch (err: any) {
-      alert(err.response?.data?.message || "Error submitting complaint");
+      alert(err.response?.data?.message || "Submission failed");
     }
   };
+  // const handleSubmit = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   try {
+  //     // const res = await API.post("/complaints", {
+  //     //   title,
+  //     //   description,
+  //     //   category,
+  //     //   district,
+  //     //   upazila,
+  //     //   anonymous,
+  //     // });
+  //     alert("Complaint submitted!");
+  //     // clear form
+  //     setTitle("");
+  //     setDescription("");
+  //     setCategory("");
+  //     setDistrict("");
+  //     setUpazila("");
+  //     setAnonymous(false);
+  //   } catch (err: any) {
+  //     alert(err.response?.data?.message || "Error submitting complaint");
+  //   }
+  // };
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white rounded shadow-md mt-10">
@@ -102,6 +128,14 @@ const ComplaintForm = () => {
             className="form-checkbox h-5 w-5 text-blue-600"
           />
           <span className="text-gray-700 font-medium">Submit Anonymously</span>
+        </label>
+        {/* upload evidence */}
+        <label>
+          <input
+            type="file"
+            onChange={(e) => setEvidence(e.target.files?.[0] || null)}
+            className="w-full border p-2 rounded"
+          />
         </label>
 
         {/* Submit button spans full width */}

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import API from "@/services/api";
@@ -6,6 +7,7 @@ const ComplaintDetailsPage = () => {
   const { id } = useParams();
   const [complaint, setComplaint] = useState<any>(null);
   const [noteText, setNoteText] = useState("");
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [role, setRole] = useState(localStorage.getItem("role"));
 
   useEffect(() => {
@@ -43,8 +45,7 @@ const ComplaintDetailsPage = () => {
       <p className="mb-2">
         <strong>Status:</strong>{" "}
         <span
-          className={`px-2 py-1 rounded text-white ${
-            complaint.status === "Submitted"
+          className={`px-2 py-1 rounded text-white ${complaint.status === "Submitted"
               ? "bg-yellow-500"
               : complaint.status === "Under Review"
                 ? "bg-blue-500"
@@ -57,7 +58,7 @@ const ComplaintDetailsPage = () => {
                       : complaint.status === "Rejected"
                         ? "bg-red-500"
                         : "bg-gray-500"
-          }`}
+            }`}
         >
           {complaint.status}
         </span>
@@ -92,6 +93,26 @@ const ComplaintDetailsPage = () => {
           </ul>
         ) : (
           <p className="text-gray-500">No notes yet</p>
+        )}
+
+        {complaint.evidence && (
+          <div className="mt-4">
+            <h3 className="font-semibold">Evidence:</h3>
+            <a
+              href={`http://localhost:5000${complaint.evidence}`}
+              target="_blank"
+              rel="noreferrer"
+              className="text-blue-600 underline"
+            >
+              View Evidence
+            </a>
+
+            <img
+              src={`http://localhost:5000${complaint.evidence}`}
+              alt="Evidence"
+              className="mt-2 max-w-sm rounded shadow"
+            />
+          </div>
         )}
       </div>
 

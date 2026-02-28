@@ -4,16 +4,39 @@ const API = axios.create({
   baseURL: "http://localhost:5000/api",
 });
 
-// Add JWT token automatically to protected requests
-API.interceptors.request.use((req) => {
+// Automatically attach token
+API.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
+
   if (token) {
-    req.headers.Authorization = `Bearer ${token}`;
+    config.headers.Authorization = `Bearer ${token}`;
   }
-  return req;
+
+  return config;
 });
 
 export default API;
+
+
+// import axios from "axios";
+
+// const API = axios.create({
+//   baseURL: "http://localhost:5000/api",
+// });
+
+// // Add JWT token automatically to protected requests
+// API.interceptors.request.use((req) => {
+//   const token = localStorage.getItem("token");
+//   if (token) {
+//     req.headers.Authorization = `Bearer ${token}`;
+//   }
+//   return req;
+// });
+
+// export default API;
+//
+//
+//
 
 
 //  // src/services/api.ts

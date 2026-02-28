@@ -22,4 +22,6 @@ export interface Complaint {
     status: string;
     updatedAt: string;
   }[];
+  evidence?: string; // 👈 ADD THIS
+  
 }

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 // import React from "react";
 // import { CiEdit } from "react-icons/ci";
 // interface Complaint {
@@ -54,7 +56,7 @@ const ComplaintCard = ({ complaint }: Props) => {
       await updateComplaintStatus(id, newStatus);
       alert("Status updated!");
       window.location.reload(); // simple refresh
-    } catch (err) {
+    } catch (err:any) {
       alert("Failed to update status");
     }
   };
