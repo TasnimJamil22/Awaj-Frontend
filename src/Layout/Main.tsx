@@ -1,3 +1,42 @@
+
+ import Header from "../Shared/Header/Header";
+import { Outlet } from "react-router-dom";
+ import { ToastContainer } from "react-toastify";
+
+const Main = () => {
+  return (
+    <div className="min-h-screen flex flex-col">
+      <Header />
+
+      <div className="flex flex-1 overflow-hidden">
+        
+
+        <main className="flex-1 overflow-y-auto p-4">
+          <Outlet />
+          {/* ✅ Toast works for ALL routes */}
+      {/* <ToastContainer
+        position="bottom-right"
+        autoClose={3000}
+      /> */}
+      <ToastContainer 
+        position="top-right"  // or bottom-right, top-center, etc.
+        autoClose={3000}      // 3 seconds
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+        </main>
+      </div>
+    </div>
+  );
+};
+
+export default Main;
+
 //  import { useEffect, useState } from "react";
 // import Header from "../Shared/Header/Header";
 // import { Outlet } from "react-router-dom";
@@ -91,25 +130,3 @@
 // };
 
 // export default Main;
-
- import Header from "../Shared/Header/Header";
-import { Outlet } from "react-router-dom";
- 
-
-const Main = () => {
-  return (
-    <div className="min-h-screen flex flex-col">
-      <Header />
-
-      <div className="flex flex-1 overflow-hidden">
-        
-
-        <main className="flex-1 overflow-y-auto p-4">
-          <Outlet />
-        </main>
-      </div>
-    </div>
-  );
-};
-
-export default Main;

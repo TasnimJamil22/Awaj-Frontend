@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import API from "../services/api";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -15,11 +16,13 @@ const Login = () => {
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("role", res.data.role);
       localStorage.setItem("email", res.data.email);
+      localStorage.setItem("district", res.data.district);
       navigate("/");
       console.log("ROLE AFTER LOGIN:", res.data.role); // dashboard
+      console.log("this is res.data",res.data);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
-      alert(err.response?.data?.message || "Invalid credentials");
+      toast.error(err.response?.data?.message || "Invalid credentials");
     }
   };
 

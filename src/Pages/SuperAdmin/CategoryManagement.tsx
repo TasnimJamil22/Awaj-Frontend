@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getCategories, createCategory, updateCategory, deleteCategory } from "@/api/categoryApi";
 import type { Category } from "@/types/category";
+import { toast } from "react-toastify";
 
 const CategoryManagement = () => {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -28,13 +29,16 @@ const CategoryManagement = () => {
   const handleSubmit = async () => {
     if (editId) {
       await updateCategory(editId, { name, description });
+      toast.success('Category updated successfully')
     } else {
       await createCategory({ name, description });
+      toast.success('Category Created Successfully.')
     }
     setName("");
     setDescription("");
     setEditId(null);
     fetchCategories();
+    
   };
 
   const handleEdit = (cat: Category) => {

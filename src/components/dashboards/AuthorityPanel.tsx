@@ -38,6 +38,7 @@ import { updateComplaintStatus } from "@/api/complaintsApi";
 import type { Complaint } from "@/types/complaint";
 
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 interface Props {
   complaint: Complaint;
 }
@@ -54,10 +55,13 @@ const ComplaintCard = ({ complaint }: Props) => {
   const handleStatusChange = async (id: string, newStatus: string) => {
     try {
       await updateComplaintStatus(id, newStatus);
-      alert("Status updated!");
-      window.location.reload(); // simple refresh
+      // window.location.reload(); // simple refresh
+       setTimeout(() => window.location.reload(), 2000); // wait 2 second
+      toast.success("Status updated!");
+     
+      
     } catch (err:any) {
-      alert("Failed to update status");
+      toast.error("Failed to update status");
     }
   };
 

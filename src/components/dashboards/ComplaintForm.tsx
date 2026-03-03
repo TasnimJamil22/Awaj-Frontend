@@ -1,16 +1,31 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+ import { getCategories } from "@/api/categoryApi";
 import { createComplaint } from "@/api/complaintsApi";
-import { useState } from "react";
-// import API from "@/services/api";
+import { districts } from "@/data/districts";
+import { upazilas } from "@/data/upazilas";
+import type { Category } from "@/types/category";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
-const ComplaintForm = () => {
+const ComplaintForm: React.FC = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
+  const [categories, setCategories] = useState<Category[]>([]);
   const [district, setDistrict] = useState("");
   const [upazila, setUpazila] = useState("");
   const [anonymous, setAnonymous] = useState(false);
   const [evidence, setEvidence] = useState<File | null>(null);
+
+  const resetForm = () => {
+    setTitle("");
+    setDescription("");
+    setDistrict("");
+    setUpazila("");
+    setCategory("");
+    setAnonymous(false);
+    setEvidence(null);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -21,43 +36,33 @@ const ComplaintForm = () => {
     formData.append("category", category);
     formData.append("district", district);
     formData.append("upazila", upazila);
-    // formData.append("anonymous", String(anonymous));
     formData.append("anonymous", anonymous.toString());
-
-    if (evidence) {
-      formData.append("evidence", evidence);
-    }
+    if (evidence) formData.append("evidence", evidence);
 
     try {
-      await createComplaint(formData); // 👈 clean API call
-      alert("Complaint submitted successfully!");
+      await createComplaint(formData);
+      toast.success("Complaint submitted successfully!");
+      resetForm();
     } catch (err: any) {
-      alert(err.response?.data?.message || "Submission failed");
+      toast.error(err.response?.data?.message || "Submission failed");
     }
   };
-  // const handleSubmit = async (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   try {
-  //     // const res = await API.post("/complaints", {
-  //     //   title,
-  //     //   description,
-  //     //   category,
-  //     //   district,
-  //     //   upazila,
-  //     //   anonymous,
-  //     // });
-  //     alert("Complaint submitted!");
-  //     // clear form
-  //     setTitle("");
-  //     setDescription("");
-  //     setCategory("");
-  //     setDistrict("");
-  //     setUpazila("");
-  //     setAnonymous(false);
-  //   } catch (err: any) {
-  //     alert(err.response?.data?.message || "Error submitting complaint");
-  //   }
-  // };
+
+  // Fetch categories
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const data = await getCategories();
+        setCategories(data);
+      } catch (error) {
+        console.error("Failed to load categories", error);
+      }
+    };
+    fetchCategories();
+  }, []);
+
+  // Get upazilas for the selected district
+  const districtUpazilas = upazilas.find((d) => d.district === district)?.upazilas;
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white rounded shadow-md mt-10">
@@ -65,10 +70,7 @@ const ComplaintForm = () => {
         Submit a Complaint
       </h2>
 
-      <form
-        onSubmit={handleSubmit}
-        className="grid grid-cols-1 md:grid-cols-2 gap-4"
-      >
+      <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Title */}
         <input
           type="text"
@@ -80,36 +82,61 @@ const ComplaintForm = () => {
         />
 
         {/* Category */}
-        <input
-          type="text"
-          placeholder="Category"
+        <select
           value={category}
           onChange={(e) => setCategory(e.target.value)}
-          className="w-full border border-gray-300 p-3 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+          className="border p-2 rounded w-full"
           required
-        />
+        >
+          <option value="" disabled>
+            Categories
+          </option>
+          {categories.map((cat) => (
+            <option key={cat._id} value={cat.name}>
+              {cat.name}
+            </option>
+          ))}
+        </select>
 
         {/* District */}
-        <input
-          type="text"
-          placeholder="District"
+        <select
           value={district}
-          onChange={(e) => setDistrict(e.target.value)}
-          className="w-full border border-gray-300 p-3 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+          onChange={(e) => {
+            setDistrict(e.target.value);
+            setUpazila(""); // reset upazila when district changes
+          }}
+          className="border p-2 rounded w-full"
           required
-        />
+        >
+          <option value="" disabled>
+            Districts
+          </option>
+          {districts.map((d) => (
+            <option key={d._id} value={d.name}>
+              {d.name}
+            </option>
+          ))}
+        </select>
 
         {/* Upazila */}
-        <input
-          type="text"
-          placeholder="Upazila"
+        <select
           value={upazila}
           onChange={(e) => setUpazila(e.target.value)}
-          className="w-full border border-gray-300 p-3 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+          className="border p-2 rounded w-full"
+          disabled={!districtUpazilas}
           required
-        />
+        >
+          <option value="" disabled>
+            {districtUpazilas ? "Select Upazila" : "Select District first"}
+          </option>
+          {districtUpazilas?.map((u) => (
+            <option key={u} value={u}>
+              {u}
+            </option>
+          ))}
+        </select>
 
-        {/* Description spans full width */}
+        {/* Description */}
         <textarea
           placeholder="Description"
           value={description}
@@ -129,7 +156,8 @@ const ComplaintForm = () => {
           />
           <span className="text-gray-700 font-medium">Submit Anonymously</span>
         </label>
-        {/* upload evidence */}
+
+        {/* Upload evidence */}
         <label>
           <input
             type="file"
@@ -138,7 +166,7 @@ const ComplaintForm = () => {
           />
         </label>
 
-        {/* Submit button spans full width */}
+        {/* Submit button */}
         <button
           type="submit"
           className="md:col-span-2 w-full bg-orange-400 text-white p-3 rounded hover:bg-orange-300 transition"
