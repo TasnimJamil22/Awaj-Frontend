@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import API from "../services/api";
+// import API from "../services/api";
 import { toast } from "react-toastify";
+import { login } from "@/api/authApi";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -10,21 +11,46 @@ const Login = () => {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleSubmit = async (e: any) => {
-    e.preventDefault();
-    try {
-      const res = await API.post("/auth/login", { email, password });
-      localStorage.setItem("token", res.data.token);
-      localStorage.setItem("role", res.data.role);
-      localStorage.setItem("email", res.data.email);
-      localStorage.setItem("district", res.data.district);
-      navigate("/");
-      console.log("ROLE AFTER LOGIN:", res.data.role); // dashboard
-      console.log("this is res.data",res.data);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (err: any) {
-      toast.error(err.response?.data?.message || "Invalid credentials");
-    }
-  };
+  e.preventDefault();
+
+  try {
+    const data = await login(email, password);
+
+    console.log("LOGIN DATA:", data);
+
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("role", data.role);
+    localStorage.setItem("email", data.email);
+    localStorage.setItem("district", data.district);
+    localStorage.setItem(
+  "assignedDistricts",
+  JSON.stringify(data.assignedDistricts)
+);
+
+    navigate("/");
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (err: any) {
+    toast.error(err.response?.data?.message || "Invalid credentials");
+  }
+};
+  // const handleSubmit = async (e: any) => {
+  //   e.preventDefault();
+  //   try {
+  //     const res = await API.post("/auth/login", { email, password });
+  //     console.log("res",res);
+  //     localStorage.setItem("token", res.data.token);
+  //     localStorage.setItem("role", res.data.role);
+  //     localStorage.setItem("email", res.data.email);
+  //     localStorage.setItem("district", res.data.district);
+  //     navigate("/");
+  //     console.log("ROLE AFTER LOGIN:", res.data.role); // dashboard
+  //     console.log("this is res.data",res.data);
+  //     // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  //   } catch (err: any) {
+  //     toast.error(err.response?.data?.message || "Invalid credentials");
+  //   }
+  // };
 
   return (
     <div className="max-w-md mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">

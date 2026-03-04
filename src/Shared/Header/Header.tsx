@@ -43,9 +43,14 @@ const Header = () => {
           </li>
 
           {role === "authority" && (
+          <>
             <li>
               <Link to="/authority">Complaints</Link>
             </li>
+            <li>
+              <Link to='/authority-dashboard'>Dashboard</Link>
+            </li>
+          </>
           )}
           {role === "user" && (
             <li>
@@ -88,9 +93,14 @@ const Header = () => {
           </li>
 
           {role === "authority" && (
+             <>
             <li>
               <Link to="/authority">Complaints</Link>
             </li>
+            <li>
+              <Link to='/authority-dashboard'>Dashboard</Link>
+            </li>
+          </>
           )}
           {role === "user" && (
             <li>

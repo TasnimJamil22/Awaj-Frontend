@@ -4,6 +4,7 @@ import type { Complaint } from "@/types/complaint";
 // GET all complaints
 export const getComplaints = async (): Promise<Complaint[]> => {
   const res = await API.get("/complaints");
+  console.log("get complaints res",res);
   return res.data;
 };
 
@@ -50,6 +51,11 @@ export const addComplaintNote = async (
   text: string
 ) => {
   const res = await API.post(`/complaints/${id}/notes`, { text });
+  return res.data;
+};
+export const getAuthorityComplaints = async () => {
+  const res = await API.get("/complaints/authority-complaints");
+   
   return res.data;
 };
 

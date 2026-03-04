@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import ComplaintCard from "@/components/dashboards/AuthorityPanel";
+import ComplaintCard from "@/components/dashboards/ComplaintCard";
 import { getMyComplaints } from "@/api/complaintsApi";
 
 const MyComplaints = () => {

@@ -2,6 +2,7 @@
  import { assignDistrict, getAuthorities } from "@/api/usersApi";
 import { useEffect, useRef, useState } from "react";
 import { districts as districtList } from "../types/districts";
+import AuthoritiesList from "./SuperAdmin/AuthoritiesList";
 
 const AssignDistrict = () => {
   // authorities list
@@ -77,12 +78,14 @@ const AssignDistrict = () => {
   };
 
   return (
-    <div className="max-w-xl mx-auto p-6 bg-white shadow rounded mt-6">
-      <h2 className="text-xl font-bold mb-4">
+    <div className=" mx-auto p-6 bg-white shadow rounded mt-6">
+      
+
+     <div className="max-w-xl mx-auto">
+      <h2 className="text-3xl font-bold mb-4 text-gray-700">
         Assign Districts to Authority
       </h2>
-
-      {/* ================= Authority Dropdown ================= */}
+       {/* ================= Authority Dropdown ================= */}
       <label className="block font-medium mb-1">Select Authority</label>
       <select
         value={selectedUser}
@@ -141,6 +144,10 @@ const AssignDistrict = () => {
       >
         Assign Districts
       </button>
+     </div>
+      <div>
+        <AuthoritiesList/>
+      </div>
     </div>
   );
 };

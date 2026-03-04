@@ -4,7 +4,7 @@ import Login from "../../Pages/Login";
 import SignUp from "../../Pages/SignUp";
 import SubmitComplaint from "@/Pages/SubmitComplaint";
 import LandingPage from "@/Pages/Home/Landing";
-import Dashboard from "@/components/dashboards/AuthorityDashboard";
+import Dashboard from "@/components/dashboards/AllComplaints";
 import ComplaintDetailsPage from "@/components/dashboards/ComplaintDetailsPage";
 import ComplaintForm from "@/components/dashboards/ComplaintForm";
 import RegisterPage from "@/Pages/RegisterPage";
@@ -17,6 +17,8 @@ import AssignDistrict from "@/Pages/AssignDistrict";
 import CategoryManagement from "@/Pages/SuperAdmin/CategoryManagement";
 import AnalyticsPage from "@/Pages/SuperAdmin/Analytics";
 import ManageUsers from "@/Pages/SuperAdmin/ManageUsers";
+import AuthorityDashboard from "@/components/dashboards/AuthorityDashboard";
+ 
 const router = createBrowserRouter([
   {
     path: "/",
@@ -126,6 +128,14 @@ const router = createBrowserRouter([
   element: (
     <ProtectedRoute roles={["superadmin"]}>
       <AnalyticsPage />
+    </ProtectedRoute>
+  ),
+},
+ {
+  path: "/authority-dashboard",
+  element: (
+    <ProtectedRoute roles={["authority"]}> 
+       <AuthorityDashboard/>
     </ProtectedRoute>
   ),
 },
